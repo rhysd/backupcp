@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+require 'backupcp'
+
+Backupcp::help unless ARGV.size > 1
+
+argv = ARGV.map{|a| File.absolute_path a}
+p argv
+
+if argv.size == 2 && File.directory?(argv[0])
+  puts "replace dir"
+  # Backupcp::replace_with_backup *argv
+else 
+  missings = argv[0..-2].reject{|f| File.exists? f}.to_a
+  if missings.empty?
+    puts "replace files"
+    # *from,dest = argv
+    # Backupcp::replace_with_backup from,dest
+  else
+    STDERR.puts "files don't exist:"
+    STDERR.puts missings
+    STDERR.puts
+    Backupcp::help
+  end
+end
