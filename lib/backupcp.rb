@@ -20,9 +20,9 @@ module Backupcp extend self
   end
 
   def replace_with_backup from, dest
-    case from.class.to_s
-    when "Array" then replace_files_with_backup from, dest
-    when "String" then replace_dir_with_backup from, dest
+    case from
+    when Array then replace_files_with_backup from, dest
+    when String then replace_dir_with_backup from, dest
     else raise "invalid argument type"
     end
   end
